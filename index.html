@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, select {
+            width: calc(100% - 16px); 
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="number"] {
+            width: calc(100% - 16px); 
+        }
+        select {
+            width: 100%; 
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Account Info</h1>
+        <form action="generate.php" method="post">
+            <label for="access">Access:</label>
+            <select id="access" name="access">
+                <option value="FA">Full Access</option>
+                <option value="NFA">Not Full Access</option>
+            </select>
+
+            <label for="domain">Domain Type:</label>
+            <input type="text" id="domain" name="domain" required>
+
+            <label for="skins">Skin Count:</label>
+            <input type="number" id="skins" name="skins" min="0" required>
+
+            <label for="days">Last Match (days):</label>
+            <input type="number" id="days" name="days" min="0" required>
+
+            <label for="activity">Activity:</label>
+            <select id="activity" name="activity">
+                <option value="Active(Safe)">Active (Safe)</option>
+                <option value="Active(Not Safe)">Active (Not Safe)</option>
+                <option value="Inactive(Safe)">Inactive (Safe)</option>
+            </select>
+
+            <label for="co">C/o:</label>
+            <input type="text" id="co" name="co">
+
+            <label for="bin">Bin:</label>
+            <input type="text" id="bin" name="bin">
+
+            <button type="submit">Generate</button>
+        </form>
+    </div>
+</body>
+</html>
