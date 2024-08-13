@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form</title>
+    <title>Account Info Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,25 +22,16 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 400px;
         }
-        h1 {
-            color: #333;
-        }
         label {
             display: block;
             margin-bottom: 8px;
         }
         input, select {
-            width: calc(100% - 16px); 
+            width: calc(100% - 16px);
             padding: 8px;
             margin-bottom: 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
-        }
-        input[type="number"] {
-            width: calc(100% - 16px); 
-        }
-        select {
-            width: 100%; 
         }
         button {
             background-color: #007bff;
@@ -53,42 +44,115 @@
         button:hover {
             background-color: #0056b3;
         }
+        .output-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            margin-top: 20px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            margin: 0;
+            font-size: 14px;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h1>Account Info</h1>
-        <form action="generate.php" method="post">
+        <h1>DaresPVP Account Info Form</h1>
+        <form id="infoForm">
             <label for="access">Access:</label>
-            <select id="access" name="access">
+            <select id="access">
                 <option value="FA">Full Access</option>
                 <option value="NFA">Not Full Access</option>
             </select>
 
             <label for="domain">Domain Type:</label>
-            <input type="text" id="domain" name="domain" required>
+            <input type="text" id="domain" required>
 
             <label for="skins">Skin Count:</label>
-            <input type="number" id="skins" name="skins" min="0" required>
+            <input type="number" id="skins" min="0" required>
 
             <label for="days">Last Match (days):</label>
-            <input type="number" id="days" name="days" min="0" required>
+            <input type="number" id="days" min="0" required>
 
             <label for="activity">Activity:</label>
-            <select id="activity" name="activity">
+            <select id="activity">
                 <option value="Active(Safe)">Active (Safe)</option>
                 <option value="Active(Not Safe)">Active (Not Safe)</option>
                 <option value="Inactive(Safe)">Inactive (Safe)</option>
+                <option value="Inactive(Not Safe)">Inactive (Not Safe)</option>
             </select>
 
             <label for="co">C/o:</label>
-            <input type="text" id="co" name="co">
+            <input type="text" id="co">
 
             <label for="bin">Bin:</label>
-            <input type="text" id="bin" name="bin">
+            <input type="text" id="bin">
 
-            <button type="submit">Generate</button>
+            <button type="button" onclick="generateMessage()">Generate</button>
         </form>
     </div>
+    
+    <div class="output-container" id="outputContainer" style="display:none;">
+        <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+        <h2>Generated Message</h2>
+        <pre id="message"></pre>
+    </div>
+
+    <script>
+        function generateMessage() {
+            var access = document.getElementById('access').value == 'FA' ? 'Full Access' : 'Not Full Access';
+            var domain = document.getElementById('domain').value;
+            var skins = document.getElementById('skins').value;
+            var days = document.getElementById('days').value;
+            var activity = document.getElementById('activity').value;
+            var co = document.getElementById('co').value;
+            var bin = document.getElementById('bin').value;
+
+            var message = "@everyone\n";
+            message += access + "\n";
+            message += "Domain: (" + domain + ")\n";
+            message += " - Skin Count: (" + skins + ")\n";
+            message += "- Last Match: " + days + " days\n";
+            message += "- " + activity + "\n";
+            message += "C/o = " + co + "\n";
+            message += "Bin = " + bin + "\n";
+
+            document.getElementById('message').textContent = message;
+            document.getElementById('outputContainer').style.display = 'block';
+        }
+
+        function copyToClipboard() {
+            var messageElement = document.getElementById('message');
+            var range = document.createRange();
+            range.selectNode(messageElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            alert('Message copied to clipboard!');
+        }
+    </script>
 </body>
 </html>
